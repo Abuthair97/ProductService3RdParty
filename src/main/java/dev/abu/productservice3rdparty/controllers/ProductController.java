@@ -3,6 +3,9 @@ package dev.abu.productservice3rdparty.controllers;
 import dev.abu.productservice3rdparty.dtos.CreateProductDto;
 import dev.abu.productservice3rdparty.models.Product;
 import dev.abu.productservice3rdparty.services.ProductService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,49 +13,58 @@ import java.util.List;
 @RestController
 public class ProductController {
    private ProductService productService;
-
-    public ProductController(ProductService productService) {
+   private HttpHeaders httpHeaders;
+    public ProductController(ProductService productService,HttpHeaders httpHeaders) {
         this.productService = productService;
+        this.httpHeaders=httpHeaders;
     }
 
     @GetMapping("/products/{productId}")
-    Product getSingleProduct(@PathVariable  Long productId){
-        return productService.getSingleProduct(productId);
+    ResponseEntity<Product> getSingleProduct(@PathVariable  Long productId){
+        httpHeaders.add("Desc","Getting single Product with Id :"+productId);
+        return new ResponseEntity<>(productService.getSingleProduct(productId), httpHeaders,HttpStatus.OK);
     }
 
     @PostMapping("/products")
-    Product createProduct(@RequestBody CreateProductDto request ){
-        return productService.createProduct(
+    ResponseEntity<Product> createProduct(@RequestBody CreateProductDto request ){
+        httpHeaders.add("Desc","New Product is added ");
+        return new ResponseEntity<>( productService.createProduct(
                 request.getTitle(),
                 request.getDescription(),
                 request.getImage(),
                 request.getCategory(),
                 request.getPrice()
-        );
+        ),httpHeaders,HttpStatus.CREATED);
     }
 
     @GetMapping("products")
-    List<Product> getAllProduct(){
-     return productService.getAllProduct();
+    ResponseEntity<List<Product>> getAllProduct(){
+        httpHeaders.add("Desc","Getting All Products ");
+     return new ResponseEntity<>(productService.getAllProduct(),httpHeaders,HttpStatus.OK);
     }
     @GetMapping("products/category/{category}")
-    List<Product> getBySpecificCategory(@PathVariable String category){
-        return productService.getBySpecificCategory(category);
+    ResponseEntity<List<Product>> getBySpecificCategory(@PathVariable String category){
+        httpHeaders.add("Desc","Getting products from Specific category");
+        return new ResponseEntity<>(productService.getBySpecificCategory(category),httpHeaders,HttpStatus.OK);
     }
     @GetMapping("products/category")
-    List<String> getAllCategory(){
-        return productService.getAllCategory();
+    ResponseEntity<List<String>> getAllCategory(){
+        httpHeaders.add("Desc","Getting List of All Category");
+        return new ResponseEntity<>(productService.getAllCategory(),httpHeaders,HttpStatus.OK);
     }
 
     @PutMapping("products/{id}")
-    public Product updateProduct(@PathVariable  Long id,@RequestBody Product product){
-        return productService.updateProduct(id,product);
+     ResponseEntity<Product> updateProduct(@PathVariable  Long id,@RequestBody Product product){
+        httpHeaders.add("Desc","Updating Values of the product with Product Id : "+id);
+        return new ResponseEntity<>( productService.updateProduct(id,product),httpHeaders,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("products/{id}")
-    public void deleteProduct(@PathVariable Long id){
-        System.out.println("Deleting Product with  "+id);
-         productService.deleteProduct(id);
+     ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+//        System.out.println("Deleting Product with  "+id);
+        httpHeaders.add("Desc","Deleting product with Id : "+id);
+        ResponseEntity<Void> responseEntity = new ResponseEntity<>(httpHeaders,HttpStatus.OK);
+        return responseEntity;
     }
 
 }
