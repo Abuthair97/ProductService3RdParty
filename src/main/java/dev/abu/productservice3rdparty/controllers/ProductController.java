@@ -1,6 +1,8 @@
 package dev.abu.productservice3rdparty.controllers;
 
 import dev.abu.productservice3rdparty.dtos.CreateProductDto;
+import dev.abu.productservice3rdparty.dtos.ErrorDto;
+import dev.abu.productservice3rdparty.exceptions.ProductNotFoundException;
 import dev.abu.productservice3rdparty.models.Product;
 import dev.abu.productservice3rdparty.services.ProductService;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    ResponseEntity<Product> getSingleProduct(@PathVariable  Long productId){
+    ResponseEntity<Product> getSingleProduct(@PathVariable  Long productId) throws ProductNotFoundException {
         httpHeaders.add("Desc","Getting single Product with Id :"+productId);
         return new ResponseEntity<>(productService.getSingleProduct(productId), httpHeaders,HttpStatus.OK);
     }
@@ -38,23 +40,23 @@ public class ProductController {
     }
 
     @GetMapping("products")
-    ResponseEntity<List<Product>> getAllProduct(){
+    ResponseEntity<List<Product>> getAllProduct() throws ProductNotFoundException {
         httpHeaders.add("Desc","Getting All Products ");
      return new ResponseEntity<>(productService.getAllProduct(),httpHeaders,HttpStatus.OK);
     }
     @GetMapping("products/category/{category}")
-    ResponseEntity<List<Product>> getBySpecificCategory(@PathVariable String category){
+    ResponseEntity<List<Product>> getBySpecificCategory(@PathVariable String category) throws ProductNotFoundException {
         httpHeaders.add("Desc","Getting products from Specific category");
         return new ResponseEntity<>(productService.getBySpecificCategory(category),httpHeaders,HttpStatus.OK);
     }
     @GetMapping("products/category")
-    ResponseEntity<List<String>> getAllCategory(){
+    ResponseEntity<List<String>> getAllCategory() throws ProductNotFoundException {
         httpHeaders.add("Desc","Getting List of All Category");
         return new ResponseEntity<>(productService.getAllCategory(),httpHeaders,HttpStatus.OK);
     }
 
     @PutMapping("products/{id}")
-     ResponseEntity<Product> updateProduct(@PathVariable  Long id,@RequestBody Product product){
+     ResponseEntity<Product> updateProduct(@PathVariable  Long id,@RequestBody Product product) throws ProductNotFoundException {
         httpHeaders.add("Desc","Updating Values of the product with Product Id : "+id);
         return new ResponseEntity<>( productService.updateProduct(id,product),httpHeaders,HttpStatus.ACCEPTED);
     }
@@ -66,5 +68,6 @@ public class ProductController {
         ResponseEntity<Void> responseEntity = new ResponseEntity<>(httpHeaders,HttpStatus.OK);
         return responseEntity;
     }
+
 
 }
