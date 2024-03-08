@@ -1,10 +1,10 @@
 package dev.abu.productservice3rdparty.controllers;
 
 import dev.abu.productservice3rdparty.dtos.CreateProductDto;
-import dev.abu.productservice3rdparty.dtos.ErrorDto;
 import dev.abu.productservice3rdparty.exceptions.ProductNotFoundException;
 import dev.abu.productservice3rdparty.models.Product;
 import dev.abu.productservice3rdparty.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 public class ProductController {
    private ProductService productService;
    private HttpHeaders httpHeaders;
-    public ProductController(ProductService productService,HttpHeaders httpHeaders) {
+    public ProductController(@Qualifier("DbProductService") ProductService productService, HttpHeaders httpHeaders) {
         this.productService = productService;
         this.httpHeaders=httpHeaders;
     }
@@ -62,9 +63,10 @@ public class ProductController {
     }
 
     @DeleteMapping("products/{id}")
-     ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+     ResponseEntity<Void> deleteProduct(@PathVariable Long id) throws ProductNotFoundException {
 //        System.out.println("Deleting Product with  "+id);
         httpHeaders.add("Desc","Deleting product with Id : "+id);
+        productService.deleteProduct(id);
         ResponseEntity<Void> responseEntity = new ResponseEntity<>(httpHeaders,HttpStatus.OK);
         return responseEntity;
     }
