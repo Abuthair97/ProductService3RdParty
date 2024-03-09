@@ -1,5 +1,6 @@
 package dev.abu.productservice3rdparty;
 
+import dev.abu.productservice3rdparty.models.Category;
 import dev.abu.productservice3rdparty.repositories.ICategoryRepository;
 import dev.abu.productservice3rdparty.repositories.IProductRepository;
 import org.junit.jupiter.api.Test;
@@ -30,4 +31,6 @@ class ProductService3RdPartyApplicationTests {
     void findAllCategoryString(String category){
         iCategoryRepository.findByTitle(category);
   }
+
+
 }

@@ -90,7 +90,11 @@ public class DbProductServiceImpl implements ProductService{
     @Override
     public List<Product> getBySpecificCategory(String category) throws ProductNotFoundException {
 
-        return  null;
+        List<Product> products = iProductRepository.specificCategory(category);
+        if(products.isEmpty()){
+            throw new ProductNotFoundException("Product not found with Category : "+category);
+        }
+        return  products;
     }
 
 //    @Override

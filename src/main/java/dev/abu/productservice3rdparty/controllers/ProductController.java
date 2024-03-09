@@ -2,6 +2,7 @@ package dev.abu.productservice3rdparty.controllers;
 
 import dev.abu.productservice3rdparty.dtos.CreateProductDto;
 import dev.abu.productservice3rdparty.exceptions.ProductNotFoundException;
+import dev.abu.productservice3rdparty.models.Category;
 import dev.abu.productservice3rdparty.models.Product;
 import dev.abu.productservice3rdparty.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;

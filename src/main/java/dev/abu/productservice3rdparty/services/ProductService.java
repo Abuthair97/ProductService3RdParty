@@ -2,6 +2,7 @@ package dev.abu.productservice3rdparty.services;
 
 
 import dev.abu.productservice3rdparty.exceptions.ProductNotFoundException;
+import dev.abu.productservice3rdparty.models.Category;
 import dev.abu.productservice3rdparty.models.Product;
 
 import java.util.List;
