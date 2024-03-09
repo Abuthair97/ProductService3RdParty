@@ -48,8 +48,11 @@ public class DbProductServiceImpl implements ProductService{
 
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException{
-        return  iProductRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("There is no Product with Id : " + productId));
+        Product product = iProductRepository.findByIdIs(productId);
+        if(product == null){
+            throw new ProductNotFoundException("There is no Product with Id : " + productId);
+        }
+        return product;
     }
 
 
@@ -90,8 +93,10 @@ public class DbProductServiceImpl implements ProductService{
         return  null;
     }
 
-    @Override
-    public List<String> getAllCategory() throws ProductNotFoundException {
-        return null;
+//    @Override
+//    public List<String> getAllCategory() throws ProductNotFoundException {
+//        return null;
     }
-}
+
+
+

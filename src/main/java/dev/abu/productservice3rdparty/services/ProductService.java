@@ -19,5 +19,5 @@ public interface ProductService {
     void deleteProduct(Long id) throws ProductNotFoundException;
     List<Product> getBySpecificCategory(String category) throws ProductNotFoundException;
 
-    List<String> getAllCategory() throws ProductNotFoundException;
+//    List<String> getAllCategory() throws ProductNotFoundException;
 }

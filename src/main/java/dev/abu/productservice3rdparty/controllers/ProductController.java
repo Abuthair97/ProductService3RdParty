@@ -50,11 +50,11 @@ public class ProductController {
         httpHeaders.add("Desc","Getting products from Specific category");
         return new ResponseEntity<>(productService.getBySpecificCategory(category),httpHeaders,HttpStatus.OK);
     }
-    @GetMapping("products/category")
-    ResponseEntity<List<String>> getAllCategory() throws ProductNotFoundException {
-        httpHeaders.add("Desc","Getting List of All Category");
-        return new ResponseEntity<>(productService.getAllCategory(),httpHeaders,HttpStatus.OK);
-    }
+//    @GetMapping("products/category")
+//    ResponseEntity<List<String>> getAllCategory() throws ProductNotFoundException {
+//        httpHeaders.add("Desc","Getting List of All Category");
+//        return new ResponseEntity<>(productService.getAllCategory(),httpHeaders,HttpStatus.OK);
+//    }
 
     @PutMapping("products/{id}")
      ResponseEntity<Product> updateProduct(@PathVariable  Long id,@RequestBody Product product) throws ProductNotFoundException {

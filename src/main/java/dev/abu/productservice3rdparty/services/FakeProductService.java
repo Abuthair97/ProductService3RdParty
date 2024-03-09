@@ -110,16 +110,16 @@ public class FakeProductService implements ProductService {
         return answer;
     }
 
-    @Override
-    public  List<String> getAllCategory() throws ProductNotFoundException {
-     List<String> ans =  restTemplate.getForObject(
-             "https://fakestoreapi.com/products/categories",List.class);
-
-     if(ans == null){
-         throw new ProductNotFoundException("NO Category is Present");
-     }
-     return ans;
-    }
+//    @Override
+//    public  List<String> getAllCategory() throws ProductNotFoundException {
+//     List<String> ans =  restTemplate.getForObject(
+//             "https://fakestoreapi.com/products/categories",List.class);
+//
+//     if(ans == null){
+//         throw new ProductNotFoundException("NO Category is Present");
+//     }
+//     return ans;
+//    }
 
 
 }
